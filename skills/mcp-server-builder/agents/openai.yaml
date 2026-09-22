@@ -1,0 +1,4 @@
+interface:
+  display_name: "MCP Server Builder"
+  short_description: "Design, build, and verify MCP servers"
+  default_prompt: "Use $mcp-server-builder to design and implement a secure MCP server for this project."
