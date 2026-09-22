@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase Map"
+  short_description: "Map repos, entrypoints, and workflows"
+  default_prompt: "Use $codebase-map to explain this repository's structure, architecture, setup, and contribution path."
