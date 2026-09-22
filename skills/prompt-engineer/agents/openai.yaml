@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prompt Engineer"
+  short_description: "Design, debug, and evaluate reliable prompts"
+  default_prompt: "Use $prompt-engineer to design and evaluate a reliable prompt for this task."
