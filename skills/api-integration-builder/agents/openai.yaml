@@ -1,0 +1,4 @@
+interface:
+  display_name: "API Integration Builder"
+  short_description: "Design and build reliable API integrations"
+  default_prompt: "Use $api-integration-builder to design and implement a reliable API integration for this project."
