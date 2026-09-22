@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plugin Packager"
+  short_description: "Build, package, test, and release Codex plugins"
+  default_prompt: "Use $plugin-packager to assemble and validate a complete Codex plugin for this project."
