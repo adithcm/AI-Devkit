@@ -1,0 +1,4 @@
+interface:
+  display_name: "Developer Docs Writer"
+  short_description: "Write clear developer-facing documentation"
+  default_prompt: "Use $docs-writer-dev to write or improve developer documentation for this project."
