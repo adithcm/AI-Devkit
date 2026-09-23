@@ -140,15 +140,26 @@ Before finishing, confirm:
 - Tests do not require live network access unless explicitly marked/manual.
 - Documentation mentions required env vars or provider setup when relevant.
 
-## Future Subagents
+## Subagent Orchestration
 
-When custom agents exist, this skill can call:
+Use available custom agents for bounded supporting work while keeping API contract decisions and final integration ownership in this parent skill:
 
-- `api-contract-reviewer`: inspect endpoint shape, schema compatibility, auth, versioning, and breaking-change risk.
-- `implementation-worker`: implement scoped client/service/test changes after the integration plan is clear.
-- `test-and-verification`: run targeted tests, typechecks, build commands, and investigate failures.
-- `security-reviewer`: inspect secret handling, webhook verification, permissions, data exposure, and unsafe logging.
-- `docs-auditor`: compare integration docs and examples against actual code behavior.
+- `repo_explorer`: map the existing client, service boundary, configuration, call sites, and tests before changing an unfamiliar integration.
+- `implementation_worker`: implement an approved, file-bounded client, adapter, webhook, configuration, or test change.
+- `test_and_verification`: independently run focused mocks, contract tests, typechecks, builds, and failure-path checks.
+- `security_reviewer`: review authentication, secret handling, webhook verification, permissions, sensitive data, SSRF, injection, and unsafe logging.
+- `docs_auditor`: compare setup, environment-variable, API, and example documentation with the implemented integration.
+- `eval_runner`: evaluate AI-backed API behavior only when a frozen dataset, rubric, baseline, and threshold exist.
+
+Give every delegated request an objective, bounded scope, relevant evidence, explicit exclusions, authorization limits, and required return format. Apply these rules:
+
+- Use `repo_explorer` before implementation only when direct inspection would be noisy or the ownership boundary is unclear.
+- Resolve endpoint, data model, reliability, and compatibility decisions in the parent before assigning `implementation_worker`.
+- Keep live credentials, paid calls, external writes, dependency changes, migrations, and deployments prohibited unless the user explicitly authorizes them.
+- Run `security_reviewer` and `test_and_verification` after the candidate change so their findings are independent of implementation.
+- Use `docs_auditor` after behavior and configuration settle; use `eval_runner` only for model-graded or nondeterministic behavior, not ordinary API correctness.
+- Wait for requested results, verify decisive evidence, reconcile conflicts, and make the final recommendation in this parent skill.
+- If custom-agent delegation is unavailable, perform the same scoped work directly without weakening the checks.
 
 ## Guardrails
 

@@ -167,17 +167,16 @@ Apply these orchestration rules:
 - Keep final architecture, contribution-path, and next-step decisions with this parent skill.
 - If the custom agent is unavailable, perform the same exploration directly and state that delegation was not used only when that detail matters.
 
-## Future Subagents
+## Available Subagents
 
-Available now:
+Use these agents only when their narrower evidence changes the map or its recommended handoff:
 
-- `repo_explorer`: read-only scan of folders, entrypoints, dependencies, execution paths, commands, and architectural boundaries.
+- `repo_explorer`: scan folders, entrypoints, dependencies, execution paths, commands, and architectural boundaries read-only.
+- `test_and_verification`: confirm a discovered setup, build, test, or run command when execution evidence is necessary and safe.
+- `docs_auditor`: compare README, setup, API, and architecture claims with the mapped repository evidence.
+- `security_reviewer`: inspect authentication, secrets, permissions, trust boundaries, and external data flow exposed by the map.
 
-Planned custom agents:
-
-- `test_and_verification`: identify and run targeted validation commands after the map suggests likely commands.
-- `docs_auditor`: compare README/setup docs against actual scripts and code behavior.
-- `security_reviewer`: inspect auth, secrets, permissions, and external data flow when the map exposes sensitive surfaces.
+Keep `repo_explorer` as the default delegation target for mapping. Give the other agents the relevant map evidence, a bounded question, explicit read/write and external-system limits, and the expected return contract. Wait for requested results, check decisive citations, and keep final architecture, contribution-path, and next-step decisions in this parent skill. If custom-agent delegation is unavailable, perform the same scoped checks directly.
 
 ## Guardrails
 
