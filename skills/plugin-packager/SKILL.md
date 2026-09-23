@@ -346,18 +346,26 @@ Open items:
 
 For review work, lead with findings ordered by severity and cite the affected file or contract. Prioritize secret exposure, unsafe executable behavior, broken installation, unauthorized actions, manifest incompatibility, misleading metadata, and missing end-to-end tests.
 
-## Future Subagents
+## Subagent Orchestration
 
-When custom agents exist, this skill can call:
+Use available custom agents for bounded package work and independent checks while keeping package shape, source-of-truth, distribution, and release-readiness decisions in this parent skill:
 
-- `plugin-structure-auditor`: inspect manifests, component discovery, paths, identities, versions, and marketplace entries.
-- `skill-bundle-reviewer`: validate bundled skills, triggering boundaries, supporting resources, and cross-skill overlap.
-- `mcp-bundle-reviewer`: validate server configuration, tools, authentication, annotations, and skill-to-tool workflows.
-- `plugin-install-tester`: install or refresh from the selected marketplace and verify discovery in a fresh task.
-- `plugin-eval-runner`: execute direct, indirect, negative, boundary, follow-up, and starter-prompt cases.
-- `release-readiness-reviewer`: inspect metadata, assets, privacy, policy, support, deployment, and submission evidence.
+- `repo_explorer`: inventory existing manifests, skills, MCP servers, apps, hooks, scripts, assets, marketplace entries, and installation paths.
+- `implementation_worker`: implement an approved, file-bounded manifest, component, configuration, metadata, or packaging change.
+- `test_and_verification`: validate schemas and paths, run component checks, install or refresh in an isolated target, and verify discovery in a fresh task when authorized.
+- `security_reviewer`: inspect executable behavior, permissions, authentication, secrets, data handling, external writes, and cross-component trust boundaries.
+- `docs_auditor`: compare package, installation, configuration, privacy, and usage documentation with the bundled and installed plugin.
+- `eval_runner`: execute frozen direct, indirect, negative, boundary, follow-up, and starter-prompt cases and report activation regressions.
 
-Keep ownership with this parent skill: choose the package shape, define the source of truth, reconcile component findings, decide readiness, and deliver the final plugin.
+Give every delegated request the plugin purpose, target surfaces, distribution path, package source of truth, bounded component scope, authorization limits, and required return format. Apply these rules:
+
+- Resolve portable versus compatibility format, component identities, and marketplace ownership in the parent before assigning implementation.
+- Keep cache changes, installation, authentication, network access, publishing, submission, and overwrite actions prohibited unless explicitly authorized.
+- Run component validation before installation, then use `test_and_verification` for an isolated installed-state check.
+- Run `security_reviewer` independently for permission and data-flow risk; use `eval_runner` only after the installed plugin is discoverable.
+- Use `docs_auditor` after package behavior and installation steps settle.
+- Wait for requested results, verify decisive artifacts, reconcile component findings, and decide release readiness in this parent skill.
+- If custom-agent delegation is unavailable, perform the same scoped work directly.
 
 ## Completion Checklist
 

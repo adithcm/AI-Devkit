@@ -126,16 +126,57 @@ Suggested next steps:
 
 - Use parallel reads for independent file inspection when available.
 - Use web search only if the user asks for current external information or the repo references an external page/package whose current behavior matters.
-- For large repos, consider delegating read-heavy exploration to a future `repo-explorer` subagent and validation commands to a future `test-and-verification` subagent when those agents are available.
+- For large or unfamiliar repos, delegate bounded read-heavy exploration to the `repo_explorer` custom agent when subagent tools are available.
+- Perform small, direct lookups in the parent thread when delegation overhead would exceed the work.
 
-## Future Subagents
+## Repo Explorer Delegation
 
-When custom agents exist, this skill can call:
+Use `repo_explorer` to gather evidence, not to make the final architectural judgment. Delegate when the repository is large, multiple independent areas need inspection, the main thread would accumulate noisy exploration output, or the user asks for a detailed execution-path trace.
 
-- `repo-explorer`: read-heavy scan of folders, entrypoints, dependencies, and architectural boundaries.
-- `test-and-verification`: identify and run targeted validation commands after the map suggests likely commands.
-- `docs-auditor`: compare README/setup docs against actual scripts and code behavior.
-- `security-reviewer`: inspect auth, secrets, permissions, and external data flow when the map exposes sensitive surfaces.
+Give the subagent a bounded request containing:
+
+```text
+Objective:
+- The repository question it must answer.
+
+Scope:
+- Directories, packages, features, or execution paths to inspect.
+
+Questions:
+- Specific facts the parent needs for its final map.
+
+Context:
+- User goal, relevant branch/base, known entrypoints, and prior evidence.
+
+Exclusions:
+- Unrelated areas and actions that must not be taken.
+
+Return:
+- Summary, file-and-line evidence, execution path, discovered commands,
+  risks or unknowns, and the smallest recommended handoff.
+```
+
+Apply these orchestration rules:
+
+- Keep the assignment read-only and explicitly prohibit code changes.
+- Send only task-local context; do not leak the intended conclusion.
+- Use multiple `repo_explorer` runs only for independent areas with no overlapping scope.
+- Tell the parent workflow to wait for every requested result before synthesizing the map.
+- Check the strongest cited evidence before repeating a material claim.
+- Reconcile contradictions and label unresolved uncertainty in the final answer.
+- Keep final architecture, contribution-path, and next-step decisions with this parent skill.
+- If the custom agent is unavailable, perform the same exploration directly and state that delegation was not used only when that detail matters.
+
+## Available Subagents
+
+Use these agents only when their narrower evidence changes the map or its recommended handoff:
+
+- `repo_explorer`: scan folders, entrypoints, dependencies, execution paths, commands, and architectural boundaries read-only.
+- `test_and_verification`: confirm a discovered setup, build, test, or run command when execution evidence is necessary and safe.
+- `docs_auditor`: compare README, setup, API, and architecture claims with the mapped repository evidence.
+- `security_reviewer`: inspect authentication, secrets, permissions, trust boundaries, and external data flow exposed by the map.
+
+Keep `repo_explorer` as the default delegation target for mapping. Give the other agents the relevant map evidence, a bounded question, explicit read/write and external-system limits, and the expected return contract. Wait for requested results, check decisive citations, and keep final architecture, contribution-path, and next-step decisions in this parent skill. If custom-agent delegation is unavailable, perform the same scoped checks directly.
 
 ## Guardrails
 

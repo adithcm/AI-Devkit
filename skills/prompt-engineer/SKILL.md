@@ -255,18 +255,25 @@ For prompt review, lead with findings ordered by impact. Cite the relevant secti
 
 For prompt debugging, return the observed symptom, likely cause, minimal change, and regression test. Distinguish evidence from hypothesis.
 
-## Future Subagents
+## Subagent Orchestration
 
-When custom agents exist, this skill can call:
+Use available custom agents for repository evidence, bounded implementation, independent risk review, verification, and controlled evaluation while keeping prompt design and final judgment in this parent skill:
 
-- `prompt-auditor`: inspect instruction hierarchy, ambiguity, conflicts, injection boundaries, and maintainability.
-- `eval-designer`: build representative datasets, rubrics, deterministic checks, and regression cases.
-- `eval-runner`: execute controlled comparisons and summarize pass rates and failures.
-- `tool-workflow-reviewer`: inspect tool descriptions, invocation policy, permission boundaries, and recovery behavior.
-- `adversarial-tester`: probe malformed inputs, prompt injection, edge cases, and unsafe behavior without receiving the expected answer.
-- `synthesis-editor`: produce the final concise prompt and change rationale from validated findings.
+- `repo_explorer`: trace how prompts, message roles, variables, schemas, retrieval context, and tool definitions are assembled in an unfamiliar codebase.
+- `implementation_worker`: apply an approved, file-bounded prompt, template, schema, or prompt-assembly change after the design is settled.
+- `security_reviewer`: inspect trusted and untrusted instruction boundaries, prompt injection paths, secret exposure, excessive tool permissions, unsafe arguments, and missing confirmation gates.
+- `test_and_verification`: run deterministic syntax, schema, rendering, parser, and tool-contract checks around the prompt implementation.
+- `eval_runner`: execute frozen representative, boundary, adversarial, malformed-input, and regression cases against baseline and candidate prompts.
 
-Keep ownership with this parent skill: define the task contract, assign narrowly scoped work, reconcile conflicts, and deliver the final prompt. Do not delegate the final judgment to a subagent.
+Define the task contract, dataset, rubric, deterministic checks, critical gates, and acceptance threshold in this parent skill before assigning an evaluation. Give every agent a bounded objective, artifacts or files, trusted context, exclusions, authorization limits, and required return format. Apply these rules:
+
+- Use `repo_explorer` only when prompt construction or tool wiring must be traced through code.
+- Resolve instruction hierarchy, desired behavior, output contract, and evaluation design in the parent before assigning `implementation_worker` or `eval_runner`.
+- Do not reveal hidden expected answers or the intended fix to an independent security review or evaluation run.
+- Keep paid model calls, credentials, network access, consequential tools, and external writes prohibited unless explicitly authorized.
+- Run deterministic verification before behavioral evaluation; keep `security_reviewer` independent of implementation.
+- Wait for requested results, inspect individual failures rather than only aggregate scores, reconcile conflicts, and deliver the final prompt in this parent skill.
+- If custom-agent delegation is unavailable, perform the same scoped work directly without claiming independent validation.
 
 ## Completion Checklist
 

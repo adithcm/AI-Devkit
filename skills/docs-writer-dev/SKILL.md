@@ -162,15 +162,23 @@ Developer docs should be:
 - Maintainer-friendly: avoid over-documenting implementation details that will churn quickly.
 - Public-ready when needed: polished enough for interviewers or collaborators to understand the project.
 
-## Future Subagents
+## Subagent Orchestration
 
-When custom agents exist, this skill can call:
+Use available custom agents for evidence gathering and independent checks while keeping document structure, wording, and final accuracy decisions in this parent skill:
 
-- `docs-auditor`: compare docs against code, scripts, examples, and tests for stale or unsupported claims.
-- `repo-explorer`: map relevant source files before writing architecture or setup docs.
-- `test-and-verification`: run documented commands and confirm outputs.
-- `synthesis-editor`: polish rough technical notes into clear final documentation.
-- `api-contract-reviewer`: verify API documentation against route handlers, schemas, and integration code.
+- `repo_explorer`: map source files, entrypoints, configuration, commands, APIs, and data flow before writing unfamiliar setup or architecture documentation.
+- `docs_auditor`: independently compare a completed draft with code, scripts, examples, tests, and diagrams for stale, missing, or unsupported claims.
+- `test_and_verification`: run documented commands and confirm their observable results without changing the documentation.
+- `security_reviewer`: review security-sensitive examples, authentication guidance, secret handling, trust boundaries, and public operational details when relevant.
+
+Give each agent the audience, reader outcome, documentation scope, repository evidence scope, version or branch, prohibited actions, and expected return format. Apply these rules:
+
+- Delegate repository discovery before drafting only when the evidence surface is broad; handle small lookups directly.
+- Write the draft in the parent skill, then use `docs_auditor` as an independent accuracy pass rather than asking it to author the document.
+- Send only specific commands that need runtime proof to `test_and_verification`; do not treat static inspection as successful execution.
+- Use `security_reviewer` only where documentation could expose secrets, enable unsafe operations, or misstate a security boundary.
+- Wait for requested results, verify cited evidence, preserve accurate content, and reconcile findings before the final edit.
+- If custom-agent delegation is unavailable, perform the same scoped checks directly.
 
 ## Guardrails
 

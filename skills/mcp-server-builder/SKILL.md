@@ -336,18 +336,26 @@ For design work, include the capability inventory, architecture, schemas, transp
 
 For reviews, lead with findings ordered by severity and cite the affected file or contract. Prioritize unauthorized access, unsafe writes, secret exposure, protocol incompatibility, schema mismatch, and missing negative tests.
 
-## Future Subagents
+## Subagent Orchestration
 
-When custom agents exist, this skill can call:
+Use available custom agents for bounded implementation and independent review while keeping MCP capability, protocol, identity, and deployment decisions in this parent skill:
 
-- `mcp-contract-designer`: design tools, resources, prompts, schemas, descriptions, and result contracts.
-- `mcp-implementation-worker`: implement scoped server, handler, and configuration changes after contracts are approved.
-- `mcp-protocol-tester`: exercise discovery, calls, schemas, errors, cancellation, and host compatibility.
-- `auth-security-reviewer`: inspect identity, scopes, object authorization, secret handling, injection, SSRF, and unsafe actions.
-- `deployment-observability-reviewer`: inspect transport hosting, limits, logs, metrics, scaling, rollout, and rollback.
-- `docs-auditor`: verify setup and connection documentation against working server behavior.
+- `repo_explorer`: map the host application, service boundaries, SDK usage, existing transports, configuration, and tests.
+- `implementation_worker`: implement an approved, file-bounded server, handler, schema, transport, configuration, or test change.
+- `test_and_verification`: exercise parsing, discovery, tool and resource calls, errors, cancellation, transport behavior, builds, and target-host compatibility.
+- `security_reviewer`: inspect authentication, scopes, object authorization, secret handling, injection, SSRF, path access, unsafe actions, and tool-permission boundaries.
+- `docs_auditor`: verify installation, connection, capability, environment-variable, and usage documentation against server behavior.
+- `eval_runner`: evaluate tool descriptions, tool selection, result usability, prompt behavior, and multi-step agent workflows against a frozen dataset and rubric.
 
-Keep ownership with this parent skill: resolve the current contract, define scope, reconcile findings, and deliver the final server design or implementation.
+Give every delegated request the user goal, approved MCP contract, target host and transport, bounded files or capabilities, authoritative evidence, prohibited actions, and expected return format. Apply these rules:
+
+- Resolve names, descriptions, schemas, side effects, identity, authorization, and transport in the parent before assigning implementation.
+- Keep credentials, dependency installation, live services, network access, deployments, and external writes prohibited unless explicitly authorized.
+- Run `security_reviewer` and `test_and_verification` after implementation; neither agent owns final protocol or product decisions.
+- Use `eval_runner` for model-facing behavioral quality, not as a substitute for protocol tests.
+- Use `docs_auditor` after configuration and behavior settle.
+- Wait for requested results, verify decisive evidence, reconcile conflicts, and deliver the final server decision in this parent skill.
+- If custom-agent delegation is unavailable, perform the same scoped work directly.
 
 ## Completion Checklist
 
