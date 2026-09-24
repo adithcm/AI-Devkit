@@ -53,6 +53,11 @@ Each skill includes `agents/openai.yaml` metadata for display and invocation in 
 AI-Devkit/
 |-- .codex/
 |   `-- agents/             # Project-scoped custom agent definitions
+|-- docs/
+|   `-- profile-setup.md    # Hybrid profile setup and privacy contract
+|-- profiles/
+|   |-- finance.example.md  # Placeholder-only financial profile
+|   `-- personal.example.md # Placeholder-only everyday profile
 |-- skills/
 |   |-- api-integration-builder/
 |   |-- codebase-map/
@@ -105,6 +110,12 @@ Open a new Codex task after installation. Current Codex documentation states tha
 
 The agent definitions currently select `gpt-5.6-terra` with medium reasoning effort. Review those settings before installation if that model is unavailable in the target environment.
 
+### Set Up Optional Profiles
+
+The repository includes placeholder-only personal and financial profile templates. Completed profiles belong outside Git and are optional until a profile-aware skill needs them.
+
+See [Profile Setup](docs/profile-setup.md) for paths, precedence, privacy boundaries, setup commands, and the confirmation flow for saved preference changes.
+
 ## Usage
 
 Current Codex versions can select a skill implicitly when a request matches the skill's description:
@@ -140,7 +151,12 @@ When a skill delegates work, the custom agent returns a scoped result to the par
 - **Evidence before claims:** repository behavior, commands, documentation, and evaluations are checked rather than assumed.
 - **Least necessary access:** read-only agents stay read-only; write-capable agents remain constrained by task scope.
 - **Independent checks:** implementation, verification, security review, documentation audit, and evaluation remain distinct responsibilities.
-- **Public-safe personalization:** future personal preferences will live outside Git, while planned repository templates will contain placeholders and generic workflows.
+- **Public-safe personalization:** personal values live outside Git, while repository templates contain placeholders and generic workflows.
+- **Financial boundaries:** planned finance skills provide education, calculations, and neutral scenarios only; they do not prescribe financial, investment, tax, or legal actions.
+
+## Financial Use Disclaimer
+
+Planned financial workflows are for general education and personal organization. They are not financial, investment, tax, or legal advice and are not a substitute for a licensed or otherwise qualified professional. Every substantive financial response must display that disclaimer. These workflows will not tell users what financial action to take; recommend specific securities, products, providers, legal strategies, or tax positions; or make legal or tax determinations. Users remain responsible for their decisions and must be directed to an appropriate professional for consequential, regulated, or jurisdiction-specific matters.
 
 ## Roadmap
 
@@ -149,7 +165,7 @@ When a skill delegates work, the custom agent returns a scoped result to the par
 | Developer skills | Complete | Six reusable developer workflows. |
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
 | Everyday skills | Planned | Decision support, research briefs, writing, learning, and news. |
-| Profile system | Planned | Private local profiles with public placeholder templates and opt-in updates. |
+| Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; skill integrations are planned. |
 | Financial skills | Planned | Personal-finance review and budgeting with a separate private financial profile. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
@@ -157,7 +173,7 @@ The repository does not currently include a release package, automated installer
 
 ## Privacy Direction
 
-Developer skills and agents do not use personal profiles. Planned everyday and financial skills will follow a hybrid profile model:
+Developer skills and agents do not use personal profiles. The profile foundation is documented in [Profile Setup](docs/profile-setup.md). Planned everyday and financial skills will follow this hybrid model:
 
 - generic behavior and profile schemas remain public;
 - completed personal profiles remain outside the repository;
@@ -166,4 +182,4 @@ Developer skills and agents do not use personal profiles. Planned everyday and f
 - profile changes require explicit confirmation;
 - financial context remains separate from everyday preferences.
 
-Until that profile system is implemented, no profile files or setup commands should be treated as available features.
+The templates and setup contract are available now. No current developer skill reads either profile; profile-aware behavior will be added only as the corresponding everyday and financial skills are implemented.

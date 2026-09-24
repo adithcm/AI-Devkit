@@ -1,0 +1,4 @@
+# Completed profiles are private and must stay outside version control.
+profiles/personal.md
+profiles/finance.md
+profiles/*.local.md
