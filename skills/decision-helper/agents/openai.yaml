@@ -1,0 +1,4 @@
+interface:
+  display_name: "Decision Helper"
+  short_description: "Compare options and make grounded decisions"
+  default_prompt: "Use $decision-helper to compare my options and recommend a practical next step."
