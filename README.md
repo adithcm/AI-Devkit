@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The current repository state establishes the developer foundation. It includes six parent skills and six supporting custom agents. Everyday, news, and personal-finance workflows are planned next, with private user profiles kept outside the repository.
+The repository includes a completed developer foundation plus the first profile-aware everyday workflow. It currently provides seven parent skills and seven supporting custom agents, with additional everyday, news, and personal-finance workflows planned. Private user profiles remain outside the repository.
 
 ## How It Works
 
@@ -34,6 +34,14 @@ The diagram shows the intended ownership model. Custom-agent availability and to
 
 Each skill includes `agents/openai.yaml` metadata for display and invocation in supported Codex surfaces. Exact discovery and invocation behavior depends on the installed Codex version.
 
+## Everyday Skills
+
+| Skill | Purpose |
+| --- | --- |
+| [`decision-helper`](skills/decision-helper/SKILL.md) | Frame choices, compare tradeoffs, test uncertainty and reversibility, rank options, and identify a practical next step. |
+
+The decision helper may read only the `Communication` and `Decision Preferences` sections of a private `personal.md`. The current request always takes precedence, and profile changes require explicit confirmation.
+
 ## Custom Agents
 
 | Agent | Access | Responsibility |
@@ -44,6 +52,7 @@ Each skill includes `agents/openai.yaml` metadata for display and invocation in 
 | [`security_reviewer`](.codex/agents/security_reviewer.toml) | Read-only | Trace trust boundaries and report evidence-backed security findings. |
 | [`docs_auditor`](.codex/agents/docs_auditor.toml) | Read-only | Compare documentation, examples, and diagrams with repository behavior. |
 | [`eval_runner`](.codex/agents/eval_runner.toml) | Workspace write | Execute frozen evaluation contracts and expose regressions, scores, cost, and uncertainty. |
+| [`tradeoff_analyst`](.codex/agents/tradeoff_analyst.toml) | Read-only | Compare bounded options, criteria, evidence, uncertainty, reversibility, and opportunity costs. |
 
 `workspace-write` identifies the Codex sandbox available to an agent. Each agent definition adds narrower behavioral limits, including restrictions on source edits, dependencies, external systems, Git operations, and destructive actions.
 
@@ -61,6 +70,7 @@ AI-Devkit/
 |-- skills/
 |   |-- api-integration-builder/
 |   |-- codebase-map/
+|   |-- decision-helper/
 |   |-- docs-writer-dev/
 |   |-- mcp-server-builder/
 |   |-- plugin-packager/
@@ -95,6 +105,7 @@ cp -R skills/docs-writer-dev "$HOME/.agents/skills/"
 cp -R skills/prompt-engineer "$HOME/.agents/skills/"
 cp -R skills/mcp-server-builder "$HOME/.agents/skills/"
 cp -R skills/plugin-packager "$HOME/.agents/skills/"
+cp -R skills/decision-helper "$HOME/.agents/skills/"
 ```
 
 ### Install Custom Agents
@@ -140,6 +151,8 @@ Write an architecture guide for this repository and include a readable Mermaid d
 Build a local stdio MCP server for these read-only project operations.
 
 Package these skills and MCP components as one installable plugin.
+
+Help me decide between these options, show the decisive tradeoffs, and recommend the next step.
 ```
 
 When a skill delegates work, the custom agent returns a scoped result to the parent skill. The parent reconciles the evidence and produces the final answer.
@@ -164,8 +177,8 @@ Planned financial workflows are for general education and personal organization.
 | --- | --- | --- |
 | Developer skills | Complete | Six reusable developer workflows. |
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
-| Everyday skills | Planned | Decision support, research briefs, writing, learning, and news. |
-| Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; skill integrations are planned. |
+| Everyday skills | In progress | Decision support is implemented; research briefs, writing, learning, and news are planned. |
+| Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; the decision helper is the first integration. |
 | Financial skills | Planned | Personal-finance review and budgeting with a separate private financial profile. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
@@ -173,7 +186,7 @@ The repository does not currently include a release package, automated installer
 
 ## Privacy Direction
 
-Developer skills and agents do not use personal profiles. The profile foundation is documented in [Profile Setup](docs/profile-setup.md). Planned everyday and financial skills will follow this hybrid model:
+Developer skills and agents do not use personal profiles. The profile foundation is documented in [Profile Setup](docs/profile-setup.md). The decision helper and planned everyday and financial skills follow this hybrid model:
 
 - generic behavior and profile schemas remain public;
 - completed personal profiles remain outside the repository;
@@ -182,4 +195,4 @@ Developer skills and agents do not use personal profiles. The profile foundation
 - profile changes require explicit confirmation;
 - financial context remains separate from everyday preferences.
 
-The templates and setup contract are available now. No current developer skill reads either profile; profile-aware behavior will be added only as the corresponding everyday and financial skills are implemented.
+The templates and setup contract are available now. No developer skill reads either profile. The decision helper reads only relevant sections of `personal.md`; other profile-aware behavior will be added only as the corresponding everyday and financial skills are implemented.
