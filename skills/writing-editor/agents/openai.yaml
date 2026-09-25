@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Editor"
+  short_description: "Edit writing for clarity, tone, and impact"
+  default_prompt: "Use $writing-editor to revise this text while preserving my meaning and voice."

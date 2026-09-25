@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes a completed developer foundation plus profile-aware everyday workflows. It currently provides eight parent skills and nine supporting custom agents, with additional everyday, news, and personal-finance workflows planned. Private user profiles remain outside the repository.
+The repository includes a completed developer foundation plus profile-aware everyday workflows. It currently provides nine parent skills and nine supporting custom agents, with additional everyday, news, and personal-finance workflows planned. Private user profiles remain outside the repository.
 
 ## How It Works
 
@@ -40,6 +40,7 @@ Each skill includes `agents/openai.yaml` metadata for display and invocation in 
 | --- | --- |
 | [`decision-helper`](skills/decision-helper/SKILL.md) | Frame choices, compare tradeoffs, test uncertainty and reversibility, rank options, and identify a practical next step. |
 | [`research-brief`](skills/research-brief/SKILL.md) | Investigate questions, evaluate sources, reconcile evidence, verify claims, and produce a cited brief. |
+| [`writing-editor`](skills/writing-editor/SKILL.md) | Proofread, copyedit, restructure, critique, or rewrite text while preserving meaning, facts, citations, and voice. |
 
 Everyday skills read only their relevant section plus `Communication` from a private `personal.md`. The current request always takes precedence, and profile changes require explicit confirmation.
 
@@ -78,7 +79,8 @@ AI-Devkit/
 |   |-- mcp-server-builder/
 |   |-- plugin-packager/
 |   |-- prompt-engineer/
-|   `-- research-brief/
+|   |-- research-brief/
+|   `-- writing-editor/
 `-- README.md
 ```
 
@@ -111,6 +113,7 @@ cp -R skills/mcp-server-builder "$HOME/.agents/skills/"
 cp -R skills/plugin-packager "$HOME/.agents/skills/"
 cp -R skills/decision-helper "$HOME/.agents/skills/"
 cp -R skills/research-brief "$HOME/.agents/skills/"
+cp -R skills/writing-editor "$HOME/.agents/skills/"
 ```
 
 ### Install Custom Agents
@@ -160,6 +163,8 @@ Package these skills and MCP components as one installable plugin.
 Help me decide between these options, show the decisive tradeoffs, and recommend the next step.
 
 Research this topic and give me a sourced brief that separates evidence, disagreement, and uncertainty.
+
+Edit this draft for clarity and flow while preserving my meaning and voice.
 ```
 
 When a skill delegates work, the custom agent returns a scoped result to the parent skill. The parent reconciles the evidence and produces the final answer.
@@ -184,8 +189,8 @@ Planned financial workflows are for general education and personal organization.
 | --- | --- | --- |
 | Developer skills | Complete | Six reusable developer workflows. |
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
-| Everyday skills | In progress | Decision support and research briefs are implemented; writing, learning, and news are planned. |
-| Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; decision and research integrations are available. |
+| Everyday skills | In progress | Decision support, research briefs, and writing editing are implemented; learning and news are planned. |
+| Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; decision, research, and writing integrations are available. |
 | Financial skills | Planned | Personal-finance review and budgeting with a separate private financial profile. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
@@ -202,4 +207,4 @@ Developer skills and agents do not use personal profiles. The profile foundation
 - profile changes require explicit confirmation;
 - financial context remains separate from everyday preferences.
 
-The templates and setup contract are available now. No developer skill reads either profile. The decision helper and research brief read only their relevant sections of `personal.md`; other profile-aware behavior will be added only as corresponding skills are implemented.
+The templates and setup contract are available now. No developer skill reads either profile. Decision, research, and writing skills read only their relevant sections of `personal.md`; other profile-aware behavior will be added only as corresponding skills are implemented.
