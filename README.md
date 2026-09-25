@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes a completed developer foundation plus the first profile-aware everyday workflow. It currently provides seven parent skills and seven supporting custom agents, with additional everyday, news, and personal-finance workflows planned. Private user profiles remain outside the repository.
+The repository includes a completed developer foundation plus profile-aware everyday workflows. It currently provides eleven parent skills and eleven supporting custom agents, with personal-finance workflows planned next. Private user profiles remain outside the repository.
 
 ## How It Works
 
@@ -39,8 +39,12 @@ Each skill includes `agents/openai.yaml` metadata for display and invocation in 
 | Skill | Purpose |
 | --- | --- |
 | [`decision-helper`](skills/decision-helper/SKILL.md) | Frame choices, compare tradeoffs, test uncertainty and reversibility, rank options, and identify a practical next step. |
+| [`research-brief`](skills/research-brief/SKILL.md) | Investigate questions, evaluate sources, reconcile evidence, verify claims, and produce a cited brief. |
+| [`writing-editor`](skills/writing-editor/SKILL.md) | Proofread, copyedit, restructure, critique, or rewrite text while preserving meaning, facts, citations, and voice. |
+| [`learning-coach`](skills/learning-coach/SKILL.md) | Explain concepts, build study plans, guide practice, assess work, diagnose misconceptions, and adapt feedback to demonstrated understanding. |
+| [`news-brief`](skills/news-brief/SKILL.md) | Produce current, sourced briefings that cluster events, rank material developments, explain context and uncertainty, and adapt to saved interests. |
 
-The decision helper may read only the `Communication` and `Decision Preferences` sections of a private `personal.md`. The current request always takes precedence, and profile changes require explicit confirmation.
+Everyday skills read only their relevant section plus `Communication` from a private `personal.md`. The current request always takes precedence, and profile changes require explicit confirmation.
 
 ## Custom Agents
 
@@ -53,6 +57,10 @@ The decision helper may read only the `Communication` and `Decision Preferences`
 | [`docs_auditor`](.codex/agents/docs_auditor.toml) | Read-only | Compare documentation, examples, and diagrams with repository behavior. |
 | [`eval_runner`](.codex/agents/eval_runner.toml) | Workspace write | Execute frozen evaluation contracts and expose regressions, scores, cost, and uncertainty. |
 | [`tradeoff_analyst`](.codex/agents/tradeoff_analyst.toml) | Read-only | Compare bounded options, criteria, evidence, uncertainty, reversibility, and opportunity costs. |
+| [`research_scout`](.codex/agents/research_scout.toml) | Read-only | Discover authoritative sources, trace primary evidence, and map disagreements and gaps. |
+| [`claim_verifier`](.codex/agents/claim_verifier.toml) | Read-only | Check material claims against proposed sources for support, scope, freshness, and qualifiers. |
+| [`learning_assessor`](.codex/agents/learning_assessor.toml) | Read-only | Evaluate supplied learner work against explicit objectives and criteria, identify error patterns, and suggest targeted practice. |
+| [`news_scout`](.codex/agents/news_scout.toml) | Read-only | Search bounded current-events scopes, cluster duplicate coverage, trace primary evidence, and report freshness, disagreement, and gaps. |
 
 `workspace-write` identifies the Codex sandbox available to an agent. Each agent definition adds narrower behavioral limits, including restrictions on source edits, dependencies, external systems, Git operations, and destructive actions.
 
@@ -72,9 +80,13 @@ AI-Devkit/
 |   |-- codebase-map/
 |   |-- decision-helper/
 |   |-- docs-writer-dev/
+|   |-- learning-coach/
 |   |-- mcp-server-builder/
+|   |-- news-brief/
 |   |-- plugin-packager/
-|   `-- prompt-engineer/
+|   |-- prompt-engineer/
+|   |-- research-brief/
+|   `-- writing-editor/
 `-- README.md
 ```
 
@@ -106,6 +118,10 @@ cp -R skills/prompt-engineer "$HOME/.agents/skills/"
 cp -R skills/mcp-server-builder "$HOME/.agents/skills/"
 cp -R skills/plugin-packager "$HOME/.agents/skills/"
 cp -R skills/decision-helper "$HOME/.agents/skills/"
+cp -R skills/research-brief "$HOME/.agents/skills/"
+cp -R skills/writing-editor "$HOME/.agents/skills/"
+cp -R skills/learning-coach "$HOME/.agents/skills/"
+cp -R skills/news-brief "$HOME/.agents/skills/"
 ```
 
 ### Install Custom Agents
@@ -153,6 +169,14 @@ Build a local stdio MCP server for these read-only project operations.
 Package these skills and MCP components as one installable plugin.
 
 Help me decide between these options, show the decisive tradeoffs, and recommend the next step.
+
+Research this topic and give me a sourced brief that separates evidence, disagreement, and uncertainty.
+
+Edit this draft for clarity and flow while preserving my meaning and voice.
+
+Teach me this topic, check my understanding with guided practice, and adapt based on my mistakes.
+
+Give me a current news brief based on my saved interests, with context, uncertainty, and direct source links.
 ```
 
 When a skill delegates work, the custom agent returns a scoped result to the parent skill. The parent reconciles the evidence and produces the final answer.
@@ -177,8 +201,8 @@ Planned financial workflows are for general education and personal organization.
 | --- | --- | --- |
 | Developer skills | Complete | Six reusable developer workflows. |
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
-| Everyday skills | In progress | Decision support is implemented; research briefs, writing, learning, and news are planned. |
-| Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; the decision helper is the first integration. |
+| Everyday skills | In progress | Decision support, research briefs, writing editing, learning coaching, and news briefings are implemented; final integration validation remains. |
+| Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; all five everyday integrations are available. |
 | Financial skills | Planned | Personal-finance review and budgeting with a separate private financial profile. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
@@ -186,7 +210,7 @@ The repository does not currently include a release package, automated installer
 
 ## Privacy Direction
 
-Developer skills and agents do not use personal profiles. The profile foundation is documented in [Profile Setup](docs/profile-setup.md). The decision helper and planned everyday and financial skills follow this hybrid model:
+Developer skills and agents do not use personal profiles. The profile foundation is documented in [Profile Setup](docs/profile-setup.md). Implemented and planned everyday and financial skills follow this hybrid model:
 
 - generic behavior and profile schemas remain public;
 - completed personal profiles remain outside the repository;
@@ -195,4 +219,4 @@ Developer skills and agents do not use personal profiles. The profile foundation
 - profile changes require explicit confirmation;
 - financial context remains separate from everyday preferences.
 
-The templates and setup contract are available now. No developer skill reads either profile. The decision helper reads only relevant sections of `personal.md`; other profile-aware behavior will be added only as the corresponding everyday and financial skills are implemented.
+The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`; financial profile-aware behavior will be added only with the corresponding skills.

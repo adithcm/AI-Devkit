@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Brief"
+  short_description: "Research topics and synthesize sourced briefs"
+  default_prompt: "Use $research-brief to investigate this topic and produce a concise, well-sourced brief."

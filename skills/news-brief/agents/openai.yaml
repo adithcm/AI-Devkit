@@ -1,0 +1,4 @@
+interface:
+  display_name: "News Brief"
+  short_description: "Current, sourced news tailored to your interests."
+  default_prompt: "Give me a current news brief based on my saved interests, with the most important developments, context, uncertainty, and direct source links."
