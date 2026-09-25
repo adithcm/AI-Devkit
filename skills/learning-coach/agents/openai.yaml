@@ -1,0 +1,4 @@
+interface:
+  display_name: "Learning Coach"
+  short_description: "Teach, practice, assess, and plan learning."
+  default_prompt: "Help me learn this topic with a clear objective, an appropriately paced explanation, guided practice, feedback, and a next step."
