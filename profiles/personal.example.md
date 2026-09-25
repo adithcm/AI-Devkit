@@ -99,6 +99,7 @@ Status: {{NOT_CONFIGURED | CONFIGURED}}
 Timezone: {{TIMEZONE}}
 Default brief length: {{SHORT | STANDARD | DETAILED}}
 Analysis level: {{FACTS_ONLY | CONTEXT | IMPLICATIONS}}
+Presentation: {{VISUAL_HIERARCHY_AND_STORY_DENSITY_PREFERENCE}}
 
 Regions:
 - {{REGION}}

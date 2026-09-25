@@ -2,7 +2,7 @@
 
 AI-Devkit uses a hybrid personalization model: skills keep reusable workflow logic in the repository, while each user's actual preferences remain in private local profile files.
 
-The templates and policy contract are available now. `decision-helper`, `research-brief`, `writing-editor`, and `learning-coach` are profile-aware and read only their relevant sections of `personal.md`. Developer skills do not use profiles; additional everyday and financial skills will adopt this contract as they are implemented.
+The templates and policy contract are available now. `decision-helper`, `research-brief`, `writing-editor`, `learning-coach`, and `news-brief` are profile-aware and read only their relevant sections of `personal.md`. Developer skills do not use profiles; financial skills will adopt this contract as they are implemented.
 
 ## Architecture
 
