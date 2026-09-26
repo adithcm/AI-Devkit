@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes a completed developer foundation plus profile-aware everyday workflows. It currently provides eleven parent skills and eleven supporting custom agents, with personal-finance workflows planned next. Private user profiles remain outside the repository.
+The repository includes completed developer and everyday foundations plus a prompt-driven financial workflow foundation. It currently provides eleven parent skills and eleven supporting custom agents, with four financial workflows in development. Private user profiles remain outside the repository.
 
 ## How It Works
 
@@ -189,11 +189,11 @@ When a skill delegates work, the custom agent returns a scoped result to the par
 - **Least necessary access:** read-only agents stay read-only; write-capable agents remain constrained by task scope.
 - **Independent checks:** implementation, verification, security review, documentation audit, and evaluation remain distinct responsibilities.
 - **Public-safe personalization:** personal values live outside Git, while repository templates contain placeholders and generic workflows.
-- **Financial boundaries:** planned finance skills provide education, calculations, and neutral scenarios only; they do not prescribe financial, investment, tax, or legal actions.
+- **Financial boundaries:** planned finance skills act as decision aids that provide education, transparent calculations, and neutral scenarios only; they do not prescribe financial, investment, tax, legal, lending, debt, or real-estate actions.
 
 ## Financial Use Disclaimer
 
-Planned financial workflows are for general education and personal organization. They are not financial, investment, tax, or legal advice and are not a substitute for a licensed or otherwise qualified professional. Every substantive financial response must display that disclaimer. These workflows will not tell users what financial action to take; recommend specific securities, products, providers, legal strategies, or tax positions; or make legal or tax determinations. Users remain responsible for their decisions and must be directed to an appropriate professional for consequential, regulated, or jurisdiction-specific matters.
+Planned financial workflows are decision aids for general education and neutral planning support. They are not financial, investment, tax, legal, lending, or real-estate advice and are not substitutes for appropriately qualified professionals. Every substantive financial response must display a concise disclaimer stating both that limitation and that the workflow cannot tell the user what action to take. These workflows may organize prompt-supplied information, explain concepts, show assumptions, perform transparent calculations, and compare neutral scenarios. They will not recommend specific securities, allocations, properties, loans, products, providers, legal strategies, or tax positions; issue action directives; or make legal, tax, lending, suitability, or purchase determinations.
 
 ## Roadmap
 
@@ -201,9 +201,9 @@ Planned financial workflows are for general education and personal organization.
 | --- | --- | --- |
 | Developer skills | Complete | Six reusable developer workflows. |
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
-| Everyday skills | In progress | Decision support, research briefs, writing editing, learning coaching, and news briefings are implemented; final integration validation remains. |
+| Everyday skills | Complete | Five profile-aware workflows implemented: decision support, research briefs, writing editing, learning coaching, and news briefings. |
 | Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; all five everyday integrations are available. |
-| Financial skills | Planned | Personal-finance review and budgeting with a separate private financial profile. |
+| Financial skills | In progress | Prompt-driven Investing Education, Budget Planner, Real-Estate Buying Guide, and Debt And Loan Scenarios workflows. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
 The repository does not currently include a release package, automated installer, contribution guide, or license. Those surfaces will be added and validated before a public release.
@@ -217,6 +217,7 @@ Developer skills and agents do not use personal profiles. The profile foundation
 - skills read only the profile sections relevant to the current task;
 - current user instructions override saved preferences;
 - profile changes require explicit confirmation;
-- financial context remains separate from everyday preferences.
+- financial workflow preferences remain separate from everyday preferences; and
+- prompt-supplied financial facts remain task-local and are never saved automatically.
 
-The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`; financial profile-aware behavior will be added only with the corresponding skills.
+The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`. Planned financial skills will use the current request as the sole source of financial circumstances and numbers, may read communication preferences from `personal.md`, and may read only non-financial workflow preferences from an optional `finance.md`.
