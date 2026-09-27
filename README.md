@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides twelve parent skills and twelve supporting custom agents, with one of four financial workflows implemented. Private user profiles remain outside the repository.
+The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides thirteen parent skills and thirteen supporting custom agents, with two of four financial workflows implemented. Private user profiles remain outside the repository.
 
 ## How It Works
 
@@ -51,6 +51,7 @@ Everyday skills read only their relevant section plus `Communication` from a pri
 | Skill | Purpose |
 | --- | --- |
 | [`investing-education`](skills/investing-education/SKILL.md) | Explain investing concepts and compare user-supplied hypothetical scenarios with transparent assumptions, calculations, uncertainty, and risks, without recommending an action. |
+| [`budget-planner`](skills/budget-planner/SKILL.md) | Organize user-supplied income and expenses, normalize timing periods, reconcile cash flow, and compare budgeting methods or scenarios without prescribing actions. |
 
 Financial skills use the current request as the sole source of financial circumstances and numbers. They may read communication preferences from `personal.md` and workflow preferences from version 2 of an optional `finance.md`, but they never store prompt-supplied financial facts. Every financial response includes the visible disclaimer and remains educational and neutral.
 
@@ -70,6 +71,7 @@ Financial skills use the current request as the sole source of financial circums
 | [`learning_assessor`](.codex/agents/learning_assessor.toml) | Read-only | Evaluate supplied learner work against explicit objectives and criteria, identify error patterns, and suggest targeted practice. |
 | [`news_scout`](.codex/agents/news_scout.toml) | Read-only | Search bounded current-events scopes, cluster duplicate coverage, trace primary evidence, and report freshness, disagreement, and gaps. |
 | [`investment_scenario_analyst`](.codex/agents/investment_scenario_analyst.toml) | Read-only | Calculate supplied hypothetical investment scenarios, verify formulas and assumptions, and return neutral results without recommendations. |
+| [`budget_scenario_analyst`](.codex/agents/budget_scenario_analyst.toml) | Read-only | Normalize supplied budget periods, reconcile categories and cash flow, and return neutral scenario arithmetic without recommendations. |
 
 `workspace-write` identifies the Codex sandbox available to an agent. Each agent definition adds narrower behavioral limits, including restrictions on source edits, dependencies, external systems, Git operations, and destructive actions.
 
@@ -86,6 +88,7 @@ AI-Devkit/
 |   `-- personal.example.md # Placeholder-only everyday profile
 |-- skills/
 |   |-- api-integration-builder/
+|   |-- budget-planner/
 |   |-- codebase-map/
 |   |-- decision-helper/
 |   |-- docs-writer-dev/
@@ -133,6 +136,7 @@ cp -R skills/writing-editor "$HOME/.agents/skills/"
 cp -R skills/learning-coach "$HOME/.agents/skills/"
 cp -R skills/news-brief "$HOME/.agents/skills/"
 cp -R skills/investing-education "$HOME/.agents/skills/"
+cp -R skills/budget-planner "$HOME/.agents/skills/"
 ```
 
 ### Install Custom Agents
@@ -190,6 +194,8 @@ Teach me this topic, check my understanding with guided practice, and adapt base
 Give me a current news brief based on my saved interests, with context, uncertainty, and direct source links.
 
 Explain how fees and inflation affect these hypothetical investing scenarios without recommending an action.
+
+Organize these income and expense amounts into a monthly budget, show the period conversions, and compare two neutral what-if scenarios without telling me what to choose.
 ```
 
 When a skill delegates work, the custom agent returns a scoped result to the parent skill. The parent reconciles the evidence and produces the final answer.
@@ -216,7 +222,7 @@ Financial workflows are decision aids for general education and neutral planning
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
 | Everyday skills | Complete | Five profile-aware workflows implemented: decision support, research briefs, writing editing, learning coaching, and news briefings. |
 | Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; all five everyday integrations are available. |
-| Financial skills | In progress | Investing Education is implemented; Budget Planner, Real-Estate Buying Guide, and Debt And Loan Scenarios are planned. |
+| Financial skills | In progress | Investing Education and Budget Planner are implemented; Real-Estate Buying Guide and Debt And Loan Scenarios are planned. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
 The repository does not currently include a release package, automated installer, contribution guide, or license. Those surfaces will be added and validated before a public release.
@@ -233,4 +239,4 @@ Developer skills and agents do not use personal profiles. The profile foundation
 - financial workflow preferences remain separate from everyday preferences; and
 - prompt-supplied financial facts remain task-local and are never saved automatically.
 
-The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`. `investing-education` uses the current request as the sole source of financial circumstances and numbers, may read communication preferences from `personal.md`, and may read only its relevant workflow preferences from a version 2 `finance.md`; future financial skills will follow the same contract.
+The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`. `investing-education` and `budget-planner` use the current request as the sole source of financial circumstances and numbers, may read communication preferences from `personal.md`, and may read only their relevant workflow preferences from a version 2 `finance.md`; future financial skills will follow the same contract.
