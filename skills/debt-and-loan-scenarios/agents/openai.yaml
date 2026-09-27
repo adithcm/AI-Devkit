@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debt and Loan Scenarios"
+  short_description: "Compare neutral debt and loan scenarios."
+  default_prompt: "Help me compare these debt or loan scenarios with transparent assumptions, repayment timelines, total interest, sensitivity ranges, and no action recommendation."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Real-Estate Buying Guide"
+  short_description: "Compare neutral home-buying cost scenarios."
+  default_prompt: "Help me understand this home-buying question with complete cost assumptions, neutral scenarios, sensitivity ranges, and no purchase or financing recommendation."

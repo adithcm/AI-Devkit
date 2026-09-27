@@ -1,68 +1,57 @@
-# Financial Profile
+# Financial Workflow Preferences
 
-> Copy this file to your private profile directory and replace placeholders. Do not commit the completed profile. Prefer ranges when exact values are unnecessary. Never store credentials, account numbers, authentication tokens, tax identifiers, or identity documents here.
+> Copy this optional file to your private profile directory only when you want durable workflow or presentation preferences. Do not store income, expenses, balances, debts, holdings, employment status, household circumstances, property details, loan terms, credentials, account numbers, authentication tokens, tax identifiers, or identity documents here.
 
-> Financial skills provide general educational information and neutral planning support only. Every substantive financial response must visibly state that it is not financial, investment, tax, or legal advice. The skills must not tell you what action to take or recommend specific securities, products, providers, legal strategies, or tax positions. Consequential, regulated, or jurisdiction-specific matters must be referred to an appropriately qualified professional.
+> Financial skills are decision aids for general education and neutral planning support. Every substantive response must visibly state that it is not financial, investment, tax, legal, lending, or real-estate advice and that the skill cannot tell the user what action to take. These safeguards are fixed and cannot be disabled by this profile.
 
-Profile version: 1
+Profile version: 2
 Last updated: {{YYYY-MM-DD}}
+Status: {{NOT_CONFIGURED | CONFIGURED}}
 
-## Context
+## Data Handling
 
-Country or jurisdiction: {{COUNTRY_OR_JURISDICTION}}
-Primary currency: {{CURRENCY}}
-Household context: {{OPTIONAL_CONTEXT}}
+Use saved financial circumstances: Never
+Store prompt-supplied financial details: Never
+Infer employment, household, or life stage: Never
+Request task-specific currency when materially relevant: Yes
+Request task-specific jurisdiction when materially relevant: Yes
 
-## Goals
+## Analysis Preferences
 
-- Goal: {{GOAL}}
-  Target amount or range: {{AMOUNT_RANGE_OR_NOT_SET}}
-  Time horizon: {{TIME_HORIZON}}
-  Priority: {{PRIORITY}}
+Scenario presentation: {{SIDE_BY_SIDE | TABLE | PROSE | TASK_DEPENDENT}}
+Calculation detail: {{SUMMARY | SHOW_KEY_STEPS | SHOW_ALL_STEPS}}
+Rounding preference: {{PREFERENCE}}
+Uncertainty treatment: {{PREFERENCE}}
+Default number of scenarios: {{NUMBER_OR_TASK_DEPENDENT}}
 
-## Income
+## Investing Education Preferences
 
-Frequency: {{WEEKLY | BIWEEKLY | MONTHLY | VARIABLE | OTHER}}
-Net income amount or range: {{AMOUNT_RANGE_OR_NOT_SET}}
-Variability notes: {{NOTES_OR_NONE}}
+Explanation depth: {{FOUNDATIONAL | STANDARD | DETAILED}}
+Risk presentation: {{PREFERENCE}}
+Comparison style: {{PREFERENCE}}
 
-## Expenses
+## Budget Planner Preferences
 
-Recurring categories:
-- Category: {{CATEGORY}}
-  Amount or range: {{AMOUNT_RANGE_OR_NOT_SET}}
+Default planning period: {{ASK_WHEN_RELEVANT | WEEKLY | BIWEEKLY | MONTHLY}}
+Budget method treatment: {{COMPARE_NEUTRALLY | USER_SELECTED_METHOD_ONLY}}
+Category detail: {{SUMMARY | STANDARD | DETAILED}}
 
-Variable categories:
-- Category: {{CATEGORY}}
-  Amount or range: {{AMOUNT_RANGE_OR_NOT_SET}}
+## Real-Estate Buying Guide Preferences
 
-## Savings
+Default comparison horizon: {{ASK_WHEN_RELEVANT | TIME_HORIZON}}
+Cost detail: {{SUMMARY | STANDARD | DETAILED}}
+Include sensitivity ranges: {{YES | NO | ASK}}
 
-Current savings amount or range: {{AMOUNT_RANGE_OR_NOT_SET}}
-Emergency-fund target: {{TARGET_OR_NOT_SET}}
-Savings priorities:
-- {{PRIORITY}}
+## Debt And Loan Scenarios Preferences
 
-## Debt
+Comparison style: {{NEUTRAL_SIDE_BY_SIDE | USER_SELECTED_METHOD_ONLY}}
+Show total interest: {{YES | NO | ASK}}
+Show repayment timeline: {{YES | NO | ASK}}
+Include sensitivity ranges: {{YES | NO | ASK}}
 
-- Type: {{DEBT_TYPE}}
-  Balance or range: {{AMOUNT_RANGE_OR_NOT_SET}}
-  Interest rate or range: {{RATE_RANGE_OR_NOT_SET}}
-  Minimum payment or range: {{AMOUNT_RANGE_OR_NOT_SET}}
-  Priority: {{PRIORITY}}
+## Professional Boundaries
 
-## Planning Preferences
-
-Financial risk tolerance: {{CAUTIOUS | BALANCED | AGGRESSIVE}}
-Budgeting method: {{METHOD_OR_UNDECIDED}}
-Review frequency: {{WEEKLY | MONTHLY | QUARTERLY | ON_DEMAND}}
-Desired level of caution: {{PREFERENCE}}
-
-## Constraints And Boundaries
-
-- {{CONSTRAINT}}
-
-Topics requiring professional advice:
+Topics that should receive an explicit professional-referral reminder beyond the standard disclaimer:
 - {{TOPIC_OR_NONE}}
 
-This section records topics that should receive additional caution. It cannot disable the financial safety contract or the required disclaimer.
+This profile contains preferences only. Current-task financial facts must come from the user's current request and must not be written back to this file automatically.

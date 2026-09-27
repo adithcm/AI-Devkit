@@ -1,0 +1,4 @@
+interface:
+  display_name: "Budget Planner"
+  short_description: "Build and compare neutral budget scenarios."
+  default_prompt: "Help me organize these current-prompt income and expense details into a clear budget with transparent assumptions, neutral method comparisons, and no action recommendation."

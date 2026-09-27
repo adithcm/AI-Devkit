@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes a completed developer foundation plus profile-aware everyday workflows. It currently provides eleven parent skills and eleven supporting custom agents, with personal-finance workflows planned next. Private user profiles remain outside the repository.
+The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides fifteen parent skills and fifteen supporting custom agents, including all four planned financial workflows. Private user profiles remain outside the repository.
 
 ## How It Works
 
@@ -46,6 +46,17 @@ Each skill includes `agents/openai.yaml` metadata for display and invocation in 
 
 Everyday skills read only their relevant section plus `Communication` from a private `personal.md`. The current request always takes precedence, and profile changes require explicit confirmation.
 
+## Financial Skills
+
+| Skill | Purpose |
+| --- | --- |
+| [`investing-education`](skills/investing-education/SKILL.md) | Explain investing concepts and compare user-supplied hypothetical scenarios with transparent assumptions, calculations, uncertainty, and risks, without recommending an action. |
+| [`budget-planner`](skills/budget-planner/SKILL.md) | Organize user-supplied income and expenses, normalize timing periods, reconcile cash flow, and compare budgeting methods or scenarios without prescribing actions. |
+| [`real-estate-buying-guide`](skills/real-estate-buying-guide/SKILL.md) | Explain home-buying mechanics and compare supplied purchase, mortgage, ownership-cost, and rent-versus-buy scenarios without selecting a property, loan, offer, or action. |
+| [`debt-and-loan-scenarios`](skills/debt-and-loan-scenarios/SKILL.md) | Explain debt and loan mechanics and compare supplied repayment, amortization, consolidation, and refinancing scenarios without selecting a strategy, product, provider, or action. |
+
+Financial skills use the current request as the sole source of user-specific financial circumstances and scenario inputs. When a workflow requires current rates, rules, market data, or property facts, it may use clearly cited authoritative sources. Financial skills may read communication preferences from `personal.md` and workflow preferences from version 2 of an optional `finance.md`, but they never store prompt-supplied financial facts. Every financial response includes the visible disclaimer and remains educational and neutral.
+
 ## Custom Agents
 
 | Agent | Access | Responsibility |
@@ -61,6 +72,10 @@ Everyday skills read only their relevant section plus `Communication` from a pri
 | [`claim_verifier`](.codex/agents/claim_verifier.toml) | Read-only | Check material claims against proposed sources for support, scope, freshness, and qualifiers. |
 | [`learning_assessor`](.codex/agents/learning_assessor.toml) | Read-only | Evaluate supplied learner work against explicit objectives and criteria, identify error patterns, and suggest targeted practice. |
 | [`news_scout`](.codex/agents/news_scout.toml) | Read-only | Search bounded current-events scopes, cluster duplicate coverage, trace primary evidence, and report freshness, disagreement, and gaps. |
+| [`investment_scenario_analyst`](.codex/agents/investment_scenario_analyst.toml) | Read-only | Calculate supplied hypothetical investment scenarios, verify formulas and assumptions, and return neutral results without recommendations. |
+| [`budget_scenario_analyst`](.codex/agents/budget_scenario_analyst.toml) | Read-only | Normalize supplied budget periods, reconcile categories and cash flow, and return neutral scenario arithmetic without recommendations. |
+| [`real_estate_scenario_analyst`](.codex/agents/real_estate_scenario_analyst.toml) | Read-only | Calculate supplied purchase, mortgage, ownership-cost, and rent-versus-buy scenarios without valuation, affordability, or action recommendations. |
+| [`debt_scenario_analyst`](.codex/agents/debt_scenario_analyst.toml) | Read-only | Calculate supplied debt, repayment, consolidation, and refinancing scenarios without selecting a strategy, product, provider, or action. |
 
 `workspace-write` identifies the Codex sandbox available to an agent. Each agent definition adds narrower behavioral limits, including restrictions on source edits, dependencies, external systems, Git operations, and destructive actions.
 
@@ -77,14 +92,18 @@ AI-Devkit/
 |   `-- personal.example.md # Placeholder-only everyday profile
 |-- skills/
 |   |-- api-integration-builder/
+|   |-- budget-planner/
 |   |-- codebase-map/
+|   |-- debt-and-loan-scenarios/
 |   |-- decision-helper/
 |   |-- docs-writer-dev/
+|   |-- investing-education/
 |   |-- learning-coach/
 |   |-- mcp-server-builder/
 |   |-- news-brief/
 |   |-- plugin-packager/
 |   |-- prompt-engineer/
+|   |-- real-estate-buying-guide/
 |   |-- research-brief/
 |   `-- writing-editor/
 `-- README.md
@@ -107,30 +126,34 @@ The locations and invocation behavior in this section follow the current [Codex 
 
 ### Install Skills
 
-Current Codex documentation identifies `$HOME/.agents/skills` as the user-level skill location. Copy the skill directories you want to use:
+Current Codex documentation identifies `$HOME/.agents/skills` as the user-level skill location. The following loop installs missing skills and skips any destination that already exists, including symbolic links. Review or diff an existing installation before replacing it intentionally.
 
 ```bash
 mkdir -p "$HOME/.agents/skills"
-cp -R skills/codebase-map "$HOME/.agents/skills/"
-cp -R skills/api-integration-builder "$HOME/.agents/skills/"
-cp -R skills/docs-writer-dev "$HOME/.agents/skills/"
-cp -R skills/prompt-engineer "$HOME/.agents/skills/"
-cp -R skills/mcp-server-builder "$HOME/.agents/skills/"
-cp -R skills/plugin-packager "$HOME/.agents/skills/"
-cp -R skills/decision-helper "$HOME/.agents/skills/"
-cp -R skills/research-brief "$HOME/.agents/skills/"
-cp -R skills/writing-editor "$HOME/.agents/skills/"
-cp -R skills/learning-coach "$HOME/.agents/skills/"
-cp -R skills/news-brief "$HOME/.agents/skills/"
+for skill in skills/*; do
+  destination="$HOME/.agents/skills/$(basename "$skill")"
+  if [ -e "$destination" ] || [ -L "$destination" ]; then
+    printf 'Skipped existing skill: %s\n' "$destination"
+  else
+    cp -R "$skill" "$destination"
+  fi
+done
 ```
 
 ### Install Custom Agents
 
-Current Codex documentation supports project-scoped definitions under `.codex/agents` and personal definitions under `$HOME/.codex/agents`. To make these definitions available from other projects, copy them to the personal directory:
+Current Codex documentation supports project-scoped definitions under `.codex/agents` and personal definitions under `$HOME/.codex/agents`. This loop installs missing definitions without replacing an existing personal agent:
 
 ```bash
 mkdir -p "$HOME/.codex/agents"
-cp .codex/agents/*.toml "$HOME/.codex/agents/"
+for agent in .codex/agents/*.toml; do
+  destination="$HOME/.codex/agents/$(basename "$agent")"
+  if [ -e "$destination" ] || [ -L "$destination" ]; then
+    printf 'Skipped existing agent: %s\n' "$destination"
+  else
+    cp "$agent" "$destination"
+  fi
+done
 ```
 
 Open a new Codex task after installation. Current Codex documentation states that skill changes are detected automatically and recommends restarting Codex when a new skill does not appear.
@@ -177,6 +200,14 @@ Edit this draft for clarity and flow while preserving my meaning and voice.
 Teach me this topic, check my understanding with guided practice, and adapt based on my mistakes.
 
 Give me a current news brief based on my saved interests, with context, uncertainty, and direct source links.
+
+Explain how fees and inflation affect these hypothetical investing scenarios without recommending an action.
+
+Organize these income and expense amounts into a monthly budget, show the period conversions, and compare two neutral what-if scenarios without telling me what to choose.
+
+Compare these hypothetical home-purchase and rent scenarios, including cash to close, mortgage amortization, recurring ownership costs, and sensitivity ranges, without recommending an action.
+
+Compare these repayment and refinancing scenarios, showing payoff timelines, total interest, fees, and sensitivity ranges without choosing a strategy for me.
 ```
 
 When a skill delegates work, the custom agent returns a scoped result to the parent skill. The parent reconciles the evidence and produces the final answer.
@@ -189,11 +220,11 @@ When a skill delegates work, the custom agent returns a scoped result to the par
 - **Least necessary access:** read-only agents stay read-only; write-capable agents remain constrained by task scope.
 - **Independent checks:** implementation, verification, security review, documentation audit, and evaluation remain distinct responsibilities.
 - **Public-safe personalization:** personal values live outside Git, while repository templates contain placeholders and generic workflows.
-- **Financial boundaries:** planned finance skills provide education, calculations, and neutral scenarios only; they do not prescribe financial, investment, tax, or legal actions.
+- **Financial boundaries:** financial skills act as decision aids that provide education, transparent calculations, and neutral scenarios only; they do not prescribe financial, investment, tax, legal, lending, debt, or real-estate actions.
 
 ## Financial Use Disclaimer
 
-Planned financial workflows are for general education and personal organization. They are not financial, investment, tax, or legal advice and are not a substitute for a licensed or otherwise qualified professional. Every substantive financial response must display that disclaimer. These workflows will not tell users what financial action to take; recommend specific securities, products, providers, legal strategies, or tax positions; or make legal or tax determinations. Users remain responsible for their decisions and must be directed to an appropriate professional for consequential, regulated, or jurisdiction-specific matters.
+Financial workflows are decision aids for general education and neutral planning support. They are not financial, investment, tax, legal, lending, or real-estate advice and are not substitutes for appropriately qualified professionals. Every substantive financial response must display a concise disclaimer stating both that limitation and that the workflow cannot tell the user what action to take. These workflows may organize prompt-supplied information, explain concepts, show assumptions, perform transparent calculations, and compare neutral scenarios. They will not recommend specific securities, allocations, properties, loans, products, providers, legal strategies, or tax positions; issue action directives; or make legal, tax, lending, suitability, or purchase determinations.
 
 ## Roadmap
 
@@ -201,9 +232,9 @@ Planned financial workflows are for general education and personal organization.
 | --- | --- | --- |
 | Developer skills | Complete | Six reusable developer workflows. |
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
-| Everyday skills | In progress | Decision support, research briefs, writing editing, learning coaching, and news briefings are implemented; final integration validation remains. |
+| Everyday skills | Complete | Five profile-aware workflows implemented: decision support, research briefs, writing editing, learning coaching, and news briefings. |
 | Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; all five everyday integrations are available. |
-| Financial skills | Planned | Personal-finance review and budgeting with a separate private financial profile. |
+| Financial skills | Complete | Four reusable workflows: Investing Education, Budget Planner, Real-Estate Buying Guide, and Debt And Loan Scenarios. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
 The repository does not currently include a release package, automated installer, contribution guide, or license. Those surfaces will be added and validated before a public release.
@@ -217,6 +248,7 @@ Developer skills and agents do not use personal profiles. The profile foundation
 - skills read only the profile sections relevant to the current task;
 - current user instructions override saved preferences;
 - profile changes require explicit confirmation;
-- financial context remains separate from everyday preferences.
+- financial workflow preferences remain separate from everyday preferences; and
+- prompt-supplied financial facts remain task-local and are never saved automatically.
 
-The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`; financial profile-aware behavior will be added only with the corresponding skills.
+The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`. `investing-education`, `budget-planner`, `real-estate-buying-guide`, and `debt-and-loan-scenarios` use the current request as the sole source of user-specific financial circumstances and scenario inputs; time-sensitive rates, rules, market data, or property facts may come from clearly cited authoritative sources. These skills may read communication preferences from `personal.md` and only their relevant workflow preferences from a version 2 `finance.md`.
