@@ -2,7 +2,7 @@
 
 AI-Devkit uses a hybrid personalization model: skills keep reusable workflow logic in the repository, while each user's actual preferences remain in private local profile files.
 
-The templates and policy contract are available now. `decision-helper`, `research-brief`, `writing-editor`, `learning-coach`, `news-brief`, `investing-education`, `budget-planner`, and `real-estate-buying-guide` are profile-aware and read only their allowed sections. Developer skills do not use profiles. Financial skills use current-prompt facts and an optional preference-only version 2 `finance.md`; they must not persist financial circumstances or infer a user's life stage.
+The templates and policy contract are available now. `decision-helper`, `research-brief`, `writing-editor`, `learning-coach`, `news-brief`, `investing-education`, `budget-planner`, `real-estate-buying-guide`, and `debt-and-loan-scenarios` are profile-aware and read only their allowed sections. Developer skills do not use profiles. Financial skills use current-prompt facts and an optional preference-only version 2 `finance.md`; they must not persist financial circumstances or infer a user's life stage.
 
 ## Architecture
 
@@ -58,7 +58,7 @@ cp profiles/finance.example.md "$PROFILE_DIR/finance.md"
 chmod 600 "$PROFILE_DIR/finance.md"
 ```
 
-Create only the profiles you intend to use. Everyday skills use `personal.md`. Financial skills use the current request as the sole source of financial facts, may read only communication preferences from `personal.md`, and may read non-financial workflow preferences from an optional `finance.md`.
+Create only the profiles you intend to use. Everyday skills use `personal.md`. Financial skills use the current request as the sole source of user-specific financial circumstances and scenario inputs, may read only communication preferences from `personal.md`, and may read non-financial workflow preferences from an optional `finance.md`. Time-sensitive rates, rules, market data, or property facts may come from clearly cited authoritative sources when the workflow requires them.
 
 Do not store passwords, API keys, account numbers, authentication tokens, recovery codes, or identity documents in either profile.
 
