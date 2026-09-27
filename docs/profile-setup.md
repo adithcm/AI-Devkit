@@ -2,7 +2,7 @@
 
 AI-Devkit uses a hybrid personalization model: skills keep reusable workflow logic in the repository, while each user's actual preferences remain in private local profile files.
 
-The templates and policy contract are available now. `decision-helper`, `research-brief`, `writing-editor`, `learning-coach`, and `news-brief` are profile-aware and read only their relevant sections of `personal.md`. Developer skills do not use profiles. Planned financial skills will use current-prompt facts and an optional preference-only `finance.md`; they must not persist financial circumstances or infer a user's life stage.
+The templates and policy contract are available now. `decision-helper`, `research-brief`, `writing-editor`, `learning-coach`, `news-brief`, and `investing-education` are profile-aware and read only their allowed sections. Developer skills do not use profiles. Financial skills use current-prompt facts and an optional preference-only version 2 `finance.md`; they must not persist financial circumstances or infer a user's life stage.
 
 ## Architecture
 
@@ -58,7 +58,7 @@ cp profiles/finance.example.md "$PROFILE_DIR/finance.md"
 chmod 600 "$PROFILE_DIR/finance.md"
 ```
 
-Create only the profiles you intend to use. Everyday skills use `personal.md`. Planned financial skills use the current request as the sole source of financial facts, may read only communication preferences from `personal.md`, and may read non-financial workflow preferences from an optional `finance.md`.
+Create only the profiles you intend to use. Everyday skills use `personal.md`. Financial skills use the current request as the sole source of financial facts, may read only communication preferences from `personal.md`, and may read non-financial workflow preferences from an optional `finance.md`.
 
 Do not store passwords, API keys, account numbers, authentication tokens, recovery codes, or identity documents in either profile.
 
@@ -104,7 +104,7 @@ General market-news interests belong in `personal.md`. Income, expenses, balance
 
 ## Financial Safety Contract
 
-Future financial skills are decision aids, not substitutes for licensed financial advisers, investment advisers, accountants, attorneys, lenders, real-estate professionals, or other appropriately qualified professionals. Every substantive financial response must include a concise, visible disclaimer stating that the information is general education and neutral planning support, not financial, investment, tax, legal, lending, or real-estate advice, and that the workflow cannot tell the user what action to take.
+Financial skills are decision aids, not substitutes for licensed financial advisers, investment advisers, accountants, attorneys, lenders, real-estate professionals, or other appropriately qualified professionals. Every substantive financial response must include a concise, visible disclaimer stating that the information is general education and neutral planning support, not financial, investment, tax, legal, lending, or real-estate advice, and that the workflow cannot tell the user what action to take.
 
 Financial skills may organize user-provided information, perform transparent calculations, explain general concepts, compare neutral scenarios, and describe questions a user could raise with a qualified professional. They must not:
 
@@ -150,7 +150,7 @@ To migrate safely:
 3. Do not copy income, expenses, balances, debts, holdings, employment status, household circumstances, property details, loan terms, or other financial facts into the new file.
 4. Keep task-specific facts in the current request instead.
 
-Planned financial skills must treat a version 1 `finance.md` as unsupported. They may inspect only enough metadata to identify the version, must not load its financial sections, and must ask the user to migrate. They must never automatically transform, copy, log, or persist version 1 financial values.
+Financial skills must treat a version 1 `finance.md` as unsupported. They may inspect only enough metadata to identify the version, must not load its financial sections, and must explain that migration is required before continuing without the profile. They must never automatically transform, copy, log, or persist version 1 financial values.
 
 ## Missing Or Malformed Profiles
 

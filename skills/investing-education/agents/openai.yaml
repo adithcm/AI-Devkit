@@ -1,0 +1,4 @@
+interface:
+  display_name: "Investing Education"
+  short_description: "Explain investing and compare neutral scenarios."
+  default_prompt: "Help me understand this investing question with transparent assumptions, neutral scenarios, clear risks, and no action recommendation."

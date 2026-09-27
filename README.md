@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes completed developer and everyday foundations plus a prompt-driven financial workflow foundation. It currently provides eleven parent skills and eleven supporting custom agents, with four financial workflows in development. Private user profiles remain outside the repository.
+The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides twelve parent skills and twelve supporting custom agents, with one of four financial workflows implemented. Private user profiles remain outside the repository.
 
 ## How It Works
 
@@ -46,6 +46,14 @@ Each skill includes `agents/openai.yaml` metadata for display and invocation in 
 
 Everyday skills read only their relevant section plus `Communication` from a private `personal.md`. The current request always takes precedence, and profile changes require explicit confirmation.
 
+## Financial Skills
+
+| Skill | Purpose |
+| --- | --- |
+| [`investing-education`](skills/investing-education/SKILL.md) | Explain investing concepts and compare user-supplied hypothetical scenarios with transparent assumptions, calculations, uncertainty, and risks, without recommending an action. |
+
+Financial skills use the current request as the sole source of financial circumstances and numbers. They may read communication preferences from `personal.md` and workflow preferences from version 2 of an optional `finance.md`, but they never store prompt-supplied financial facts. Every financial response includes the visible disclaimer and remains educational and neutral.
+
 ## Custom Agents
 
 | Agent | Access | Responsibility |
@@ -61,6 +69,7 @@ Everyday skills read only their relevant section plus `Communication` from a pri
 | [`claim_verifier`](.codex/agents/claim_verifier.toml) | Read-only | Check material claims against proposed sources for support, scope, freshness, and qualifiers. |
 | [`learning_assessor`](.codex/agents/learning_assessor.toml) | Read-only | Evaluate supplied learner work against explicit objectives and criteria, identify error patterns, and suggest targeted practice. |
 | [`news_scout`](.codex/agents/news_scout.toml) | Read-only | Search bounded current-events scopes, cluster duplicate coverage, trace primary evidence, and report freshness, disagreement, and gaps. |
+| [`investment_scenario_analyst`](.codex/agents/investment_scenario_analyst.toml) | Read-only | Calculate supplied hypothetical investment scenarios, verify formulas and assumptions, and return neutral results without recommendations. |
 
 `workspace-write` identifies the Codex sandbox available to an agent. Each agent definition adds narrower behavioral limits, including restrictions on source edits, dependencies, external systems, Git operations, and destructive actions.
 
@@ -80,6 +89,7 @@ AI-Devkit/
 |   |-- codebase-map/
 |   |-- decision-helper/
 |   |-- docs-writer-dev/
+|   |-- investing-education/
 |   |-- learning-coach/
 |   |-- mcp-server-builder/
 |   |-- news-brief/
@@ -122,6 +132,7 @@ cp -R skills/research-brief "$HOME/.agents/skills/"
 cp -R skills/writing-editor "$HOME/.agents/skills/"
 cp -R skills/learning-coach "$HOME/.agents/skills/"
 cp -R skills/news-brief "$HOME/.agents/skills/"
+cp -R skills/investing-education "$HOME/.agents/skills/"
 ```
 
 ### Install Custom Agents
@@ -177,6 +188,8 @@ Edit this draft for clarity and flow while preserving my meaning and voice.
 Teach me this topic, check my understanding with guided practice, and adapt based on my mistakes.
 
 Give me a current news brief based on my saved interests, with context, uncertainty, and direct source links.
+
+Explain how fees and inflation affect these hypothetical investing scenarios without recommending an action.
 ```
 
 When a skill delegates work, the custom agent returns a scoped result to the parent skill. The parent reconciles the evidence and produces the final answer.
@@ -189,11 +202,11 @@ When a skill delegates work, the custom agent returns a scoped result to the par
 - **Least necessary access:** read-only agents stay read-only; write-capable agents remain constrained by task scope.
 - **Independent checks:** implementation, verification, security review, documentation audit, and evaluation remain distinct responsibilities.
 - **Public-safe personalization:** personal values live outside Git, while repository templates contain placeholders and generic workflows.
-- **Financial boundaries:** planned finance skills act as decision aids that provide education, transparent calculations, and neutral scenarios only; they do not prescribe financial, investment, tax, legal, lending, debt, or real-estate actions.
+- **Financial boundaries:** financial skills act as decision aids that provide education, transparent calculations, and neutral scenarios only; they do not prescribe financial, investment, tax, legal, lending, debt, or real-estate actions.
 
 ## Financial Use Disclaimer
 
-Planned financial workflows are decision aids for general education and neutral planning support. They are not financial, investment, tax, legal, lending, or real-estate advice and are not substitutes for appropriately qualified professionals. Every substantive financial response must display a concise disclaimer stating both that limitation and that the workflow cannot tell the user what action to take. These workflows may organize prompt-supplied information, explain concepts, show assumptions, perform transparent calculations, and compare neutral scenarios. They will not recommend specific securities, allocations, properties, loans, products, providers, legal strategies, or tax positions; issue action directives; or make legal, tax, lending, suitability, or purchase determinations.
+Financial workflows are decision aids for general education and neutral planning support. They are not financial, investment, tax, legal, lending, or real-estate advice and are not substitutes for appropriately qualified professionals. Every substantive financial response must display a concise disclaimer stating both that limitation and that the workflow cannot tell the user what action to take. These workflows may organize prompt-supplied information, explain concepts, show assumptions, perform transparent calculations, and compare neutral scenarios. They will not recommend specific securities, allocations, properties, loans, products, providers, legal strategies, or tax positions; issue action directives; or make legal, tax, lending, suitability, or purchase determinations.
 
 ## Roadmap
 
@@ -203,7 +216,7 @@ Planned financial workflows are decision aids for general education and neutral 
 | Developer subagents | Complete | Six focused agents connected to the parent skills. |
 | Everyday skills | Complete | Five profile-aware workflows implemented: decision support, research briefs, writing editing, learning coaching, and news briefings. |
 | Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; all five everyday integrations are available. |
-| Financial skills | In progress | Prompt-driven Investing Education, Budget Planner, Real-Estate Buying Guide, and Debt And Loan Scenarios workflows. |
+| Financial skills | In progress | Investing Education is implemented; Budget Planner, Real-Estate Buying Guide, and Debt And Loan Scenarios are planned. |
 | Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
 
 The repository does not currently include a release package, automated installer, contribution guide, or license. Those surfaces will be added and validated before a public release.
@@ -220,4 +233,4 @@ Developer skills and agents do not use personal profiles. The profile foundation
 - financial workflow preferences remain separate from everyday preferences; and
 - prompt-supplied financial facts remain task-local and are never saved automatically.
 
-The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`. Planned financial skills will use the current request as the sole source of financial circumstances and numbers, may read communication preferences from `personal.md`, and may read only non-financial workflow preferences from an optional `finance.md`.
+The templates and setup contract are available now. No developer skill reads either profile. Decision, research, writing, learning, and news skills read only their relevant sections of `personal.md`. `investing-education` uses the current request as the sole source of financial circumstances and numbers, may read communication preferences from `personal.md`, and may read only its relevant workflow preferences from a version 2 `finance.md`; future financial skills will follow the same contract.
