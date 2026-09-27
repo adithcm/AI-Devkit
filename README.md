@@ -126,34 +126,34 @@ The locations and invocation behavior in this section follow the current [Codex 
 
 ### Install Skills
 
-Current Codex documentation identifies `$HOME/.agents/skills` as the user-level skill location. Copy the skill directories you want to use:
+Current Codex documentation identifies `$HOME/.agents/skills` as the user-level skill location. The following loop installs missing skills and skips any destination that already exists, including symbolic links. Review or diff an existing installation before replacing it intentionally.
 
 ```bash
 mkdir -p "$HOME/.agents/skills"
-cp -R skills/codebase-map "$HOME/.agents/skills/"
-cp -R skills/api-integration-builder "$HOME/.agents/skills/"
-cp -R skills/docs-writer-dev "$HOME/.agents/skills/"
-cp -R skills/prompt-engineer "$HOME/.agents/skills/"
-cp -R skills/mcp-server-builder "$HOME/.agents/skills/"
-cp -R skills/plugin-packager "$HOME/.agents/skills/"
-cp -R skills/decision-helper "$HOME/.agents/skills/"
-cp -R skills/research-brief "$HOME/.agents/skills/"
-cp -R skills/writing-editor "$HOME/.agents/skills/"
-cp -R skills/learning-coach "$HOME/.agents/skills/"
-cp -R skills/news-brief "$HOME/.agents/skills/"
-cp -R skills/investing-education "$HOME/.agents/skills/"
-cp -R skills/budget-planner "$HOME/.agents/skills/"
-cp -R skills/real-estate-buying-guide "$HOME/.agents/skills/"
-cp -R skills/debt-and-loan-scenarios "$HOME/.agents/skills/"
+for skill in skills/*; do
+  destination="$HOME/.agents/skills/$(basename "$skill")"
+  if [ -e "$destination" ] || [ -L "$destination" ]; then
+    printf 'Skipped existing skill: %s\n' "$destination"
+  else
+    cp -R "$skill" "$destination"
+  fi
+done
 ```
 
 ### Install Custom Agents
 
-Current Codex documentation supports project-scoped definitions under `.codex/agents` and personal definitions under `$HOME/.codex/agents`. To make these definitions available from other projects, copy them to the personal directory:
+Current Codex documentation supports project-scoped definitions under `.codex/agents` and personal definitions under `$HOME/.codex/agents`. This loop installs missing definitions without replacing an existing personal agent:
 
 ```bash
 mkdir -p "$HOME/.codex/agents"
-cp .codex/agents/*.toml "$HOME/.codex/agents/"
+for agent in .codex/agents/*.toml; do
+  destination="$HOME/.codex/agents/$(basename "$agent")"
+  if [ -e "$destination" ] || [ -L "$destination" ]; then
+    printf 'Skipped existing agent: %s\n' "$destination"
+  else
+    cp "$agent" "$destination"
+  fi
+done
 ```
 
 Open a new Codex task after installation. Current Codex documentation states that skill changes are detected automatically and recommends restarting Codex when a new skill does not appear.

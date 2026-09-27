@@ -46,19 +46,37 @@ The repository also ignores `profiles/personal.md`, `profiles/finance.md`, and `
 
 ## Create Local Profiles
 
-Run these commands from the cloned repository root:
+Run the shared directory setup from the cloned repository root. Review an existing profile directory before changing its permissions.
 
 ```bash
 PROFILE_DIR="${CODEX_PROFILE_DIR:-${CODEX_HOME:-$HOME/.codex}/profiles}"
 mkdir -p "$PROFILE_DIR"
 chmod 700 "$PROFILE_DIR"
-cp profiles/personal.example.md "$PROFILE_DIR/personal.md"
-chmod 600 "$PROFILE_DIR/personal.md"
-cp profiles/finance.example.md "$PROFILE_DIR/finance.md"
-chmod 600 "$PROFILE_DIR/finance.md"
 ```
 
-Create only the profiles you intend to use. Everyday skills use `personal.md`. Financial skills use the current request as the sole source of user-specific financial circumstances and scenario inputs, may read only communication preferences from `personal.md`, and may read non-financial workflow preferences from an optional `finance.md`. Time-sensitive rates, rules, market data, or property facts may come from clearly cited authoritative sources when the workflow requires them.
+Create `personal.md` only when you want everyday personalization. This command refuses to replace an existing file or symbolic link:
+
+```bash
+if [ -e "$PROFILE_DIR/personal.md" ] || [ -L "$PROFILE_DIR/personal.md" ]; then
+  printf 'Not replaced: %s\n' "$PROFILE_DIR/personal.md"
+else
+  cp profiles/personal.example.md "$PROFILE_DIR/personal.md"
+  chmod 600 "$PROFILE_DIR/personal.md"
+fi
+```
+
+Create the optional `finance.md` only when you want saved financial workflow and presentation preferences. It contains no financial circumstances. This command also refuses to replace an existing file or symbolic link:
+
+```bash
+if [ -e "$PROFILE_DIR/finance.md" ] || [ -L "$PROFILE_DIR/finance.md" ]; then
+  printf 'Not replaced: %s\n' "$PROFILE_DIR/finance.md"
+else
+  cp profiles/finance.example.md "$PROFILE_DIR/finance.md"
+  chmod 600 "$PROFILE_DIR/finance.md"
+fi
+```
+
+Everyday skills use `personal.md`. Financial skills use the current request as the sole source of user-specific financial circumstances and scenario inputs, may read only communication preferences from `personal.md`, and may read non-financial workflow preferences from an optional `finance.md`. Time-sensitive rates, rules, market data, or property facts may come from clearly cited authoritative sources when the workflow requires them.
 
 Do not store passwords, API keys, account numbers, authentication tokens, recovery codes, or identity documents in either profile.
 
