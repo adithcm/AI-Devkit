@@ -2,7 +2,7 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides fifteen parent skills and fifteen supporting custom agents, including all four planned financial workflows. Private user profiles remain outside the repository.
+The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides fifteen parent skills and fifteen supporting custom agents, including all four planned financial workflows. Private user profiles remain outside the repository. The documented project baseline is [0.1.0](CHANGELOG.md); licensing is intentionally not yet decided.
 
 ## How It Works
 
@@ -235,9 +235,10 @@ Financial workflows are decision aids for general education and neutral planning
 | Everyday skills | Complete | Five profile-aware workflows implemented: decision support, research briefs, writing editing, learning coaching, and news briefings. |
 | Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; all five everyday integrations are available. |
 | Financial skills | Complete | Four reusable workflows: Investing Education, Budget Planner, Real-Estate Buying Guide, and Debt And Loan Scenarios. |
-| Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
+| Release documentation | In progress | Contribution, security, architecture, validation, and release-checklist documentation. |
+| Distribution | Planned | Automated installation, plugin packaging, and clean-user testing. |
 
-The repository does not currently include a release package, automated installer, contribution guide, or license. Those surfaces will be added and validated before a public release.
+The repository does not currently include an automated installer, release package, contribution guide, security policy, or license. This documentation phase will add the public-project guidance; the license remains intentionally undecided until the maintainer selects one.
 
 ## Privacy Direction
 
