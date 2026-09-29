@@ -2,7 +2,19 @@
 
 AI-Devkit is a growing collection of reusable Codex skills and focused custom agents. It serves two purposes: a practical personal toolkit for recurring work and a public, inspectable example of how to design agent workflows with clear ownership, bounded delegation, and evidence-backed verification.
 
-The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides fifteen parent skills and fifteen supporting custom agents, including all four planned financial workflows. Private user profiles remain outside the repository.
+The repository includes completed developer and everyday foundations plus prompt-driven financial workflows. It currently provides fifteen parent skills and fifteen supporting custom agents, including all four planned financial workflows. Private user profiles remain outside the repository. The documented project baseline is [0.1.0](CHANGELOG.md); licensing is intentionally not yet decided.
+
+## Documentation
+
+| Guide | What it covers |
+| --- | --- |
+| [Architecture](docs/architecture.md) | Skill ownership, custom-agent delegation, installation shape, and profile trust boundaries. |
+| [Profile Setup](docs/profile-setup.md) | Private profile paths, allowed readers, precedence, and safe preference updates. |
+| [Contributing](CONTRIBUTING.md) | Adding skills or agents while preserving scope, privacy, and financial-safety requirements. |
+| [Security Policy](SECURITY.md) | Vulnerability reporting, sensitive-data handling, and security boundaries. |
+| [Validation Guide](docs/validation.md) | Repeatable structure, metadata, documentation, privacy, and installation checks. |
+| [Release Checklist](docs/release-checklist.md) | Final review steps before merging or publishing a release. |
+| [Changelog](CHANGELOG.md) | Documented project baselines and notable changes. |
 
 ## How It Works
 
@@ -86,7 +98,10 @@ AI-Devkit/
 |-- .codex/
 |   `-- agents/             # Project-scoped custom agent definitions
 |-- docs/
-|   `-- profile-setup.md    # Hybrid profile setup and privacy contract
+|   |-- architecture.md     # System boundaries and data flow
+|   |-- profile-setup.md    # Hybrid profile setup and privacy contract
+|   |-- release-checklist.md
+|   `-- validation.md
 |-- profiles/
 |   |-- finance.example.md  # Placeholder-only financial profile
 |   `-- personal.example.md # Placeholder-only everyday profile
@@ -106,7 +121,10 @@ AI-Devkit/
 |   |-- real-estate-buying-guide/
 |   |-- research-brief/
 |   `-- writing-editor/
-`-- README.md
+|-- CHANGELOG.md
+|-- CONTRIBUTING.md
+|-- README.md
+`-- SECURITY.md
 ```
 
 Every skill directory currently contains:
@@ -235,9 +253,10 @@ Financial workflows are decision aids for general education and neutral planning
 | Everyday skills | Complete | Five profile-aware workflows implemented: decision support, research briefs, writing editing, learning coaching, and news briefings. |
 | Profile foundation | Available | Public placeholder templates, private-path conventions, and opt-in update rules; all five everyday integrations are available. |
 | Financial skills | Complete | Four reusable workflows: Investing Education, Budget Planner, Real-Estate Buying Guide, and Debt And Loan Scenarios. |
-| Distribution | Planned | Automated installation, plugin packaging, clean-user testing, and release documentation. |
+| Release documentation | Complete | Contribution, security, architecture, validation, and release-checklist documentation. |
+| Distribution | Planned | Automated installation, plugin packaging, and clean-user testing. |
 
-The repository does not currently include a release package, automated installer, contribution guide, or license. Those surfaces will be added and validated before a public release.
+AI-Devkit now includes its public-project documentation foundation. It does not yet include an automated installer, release package, or license. The license remains intentionally undecided until the maintainer selects one; until then, public availability does not grant reuse rights.
 
 ## Privacy Direction
 
